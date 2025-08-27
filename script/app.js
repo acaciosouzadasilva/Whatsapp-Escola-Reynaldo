@@ -1,5 +1,5 @@
-const lista_alunos = document.querySelector("#lista_alunos")
-
+const lista_alunos = document.querySelector("#lista_alunos");
+const turma = document.querySelector("#turma");
 const alunos = [
     // ================= 6º ANO =================
     { nome: "Ana Silva", serie: "6A" },
@@ -319,15 +319,32 @@ const alunos = [
   
 
 
-const gerar_lista_alunos = ()=>{
+const gerar_lista_alunos = (n)=>{
     let lista = []
     for(let x = 0;x < alunos.length;x++){
-        if (alunos[x]['serie'] == "6A"){
+        if (alunos[x]['serie'] == n){
             lista.push(alunos[x]['nome'])
-            // console.log(alunos[x]['nome'],alunos[x]['serie']) 
+            // console.log(,alunos[x]['serie']) 
         }             
     }
-console.log(lista)
+    return lista;
 }
+const gerarListaCheckbox = (array)=>{
+    return array.map((item, index)=>{
+        return `
+        <div>
+            <input type="checkbox" id="chk_${index}" value="${item}">
+            <label for="chk_${index}">${item}</label>
+        </div>    
+        `;
 
-gerar_lista_alunos()
+    }).join("");
+    }
+
+    let selecionados=() =>{ Array.from(document.querySelectorAll("#lista_alunos input[type='checkbox']:checked")).map(x=> x.value)}
+     
+turma.addEventListener('change',()=>{
+    
+    lista_alunos.innerHTML = gerarListaCheckbox(gerar_lista_alunos(turma.value));
+    
+})
